@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aaoka Tiffin</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+  
+<style>
+/* GLOBAL FONT */
+body {
+  background: #f9f7f2;
+  font-family: 'Roboto', sans-serif;
+}
+
+/* HEADER (soft, homely, calm background) */
+.header {
+  background: #fdf6ec; /* soft warm off-white, not spicy */
+  padding: 18px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05); /* subtle depth */
+}
+
+/* BRAND TITLE (premium, soft, slightly 3D effect) */
+.brand-title {
+  font-weight: 900;
+  font-size: 38px;
+  color: #5a3e2b; /* deep brown, food-friendly */
+  text-shadow: 1px 1px 0 #ffffff; /* soft 3D lift */
+}
+
+/* TAGLINE (soft, homely tone) */
+.tagline {
+  font-size: 18px;
+  color: #7a6a5a; /* muted brown-grey */
+}
+
+.profile-img {
+  width: 90px; /* fixed size for consistency */
+  height: 90px; /* same as width = perfect circle */
+  border-radius: 50%; /* makes it circular */
+  object-fit: cover; /* ensures face fits nicely */
+  border: 2px solid #ffffff; /* clean white border */
+}
+
+/* CARDS */
+.card {
+  border: none;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.card img {
+  height: 260px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+/* QUANTITY BUTTONS (modern + / - buttons) */
+.qty-btn {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+}
+
+.qty-btn.minus {
+  background: #e9ecef;
+}
+
+/* PLUS BUTTON (green action button) */
+.qty-btn.plus {
+  background: #218838;
+  color: white;
+}
+
+.qty-btn:active {
+  transform: scale(0.95);
+}
+  
+/* SOLD OUT */
+.sold-out {
+  opacity: 0.5;
+}
+
+.sold-text {
+  color: red;
+  font-weight: bold;
+}
+
+/* ITEM NAME (Idli, Thali etc.) */
+.card h6 {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: #4a4a4a;
+}
+
+/* DESCRIPTION TEXT */
+.card .desc {
+  display: block;
+  margin-top: 8px;
+  margin-bottom: 14px;
+  font-size: 14px;
+  color: #6c757d;
+}
+
+/* DELIVERY TEXT */
+.delivery-text {
+  margin-top: 12px;
+  font-size: 16px;
+  color: #6c757d;
+}
+
+/* SECTION TITLE (Breakfast, Lunch etc.) */
+.section-title {
+  font-size: 28px;
+  font-weight: 700;
+  margin-top: 24px;
+  margin-bottom: 12px;
+  color: #2c2c2c;
+}
+
+/* ORDER BOX */
+.order-box {
+  background: white;
+  padding: 15px;
+  border-radius: 12px;
+  margin-top: 20px;
+}
+
+/* ORDER SUMMARY SECTION */
+.order-summary {
+  background: white;
+  padding: 15px;
+  border-radius: 12px;
+  margin-top: 20px;
+}
+
+/* MENU DATE (highlighted white card with border for strong visibility) */
+.menu-date {
+  font-size: 22px;
+  font-weight: 700;
+  color: #e76f51; /* warm orange-red text for emphasis */
+  background: #ffffff; /* clean white background for contrast */
+  border: 2px solid #f4a261; /* soft orange border to highlight */
+  padding: 10px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container py-3">
+
+  <!-- HEADER -->
+  <div class="header d-flex align-items-center">
+    <div style="width:30%">
+      <img src="https://raw.githubusercontent.com/mayanksd/sheetalhomefood/refs/heads/main/sheetal_image.png" class="profile-img">
+    </div>
+    <div style="width:70%">
+      <h3 class="mb-1 fw-bold brand-title">Sheetal’s Home Food</h3>
+      <p class="mb-0 tagline">Fresh ghar ka khana, made with love ❤️</p>
+    </div>
+  </div>
+
+  <!-- MENU DATE -->
+  <div id="menu-date" class="menu-date mt-2 mb-3"></div>
+	
+  <!-- BREAKFAST -->
+  <div class="section-title">Breakfast</div>
+  <div class="row g-3">
+
+    <div class="col-12 col-md-6">
+      <div class="card p-2" id="item1" data-name="Idli" data-price="60" data-slot="8-9 AM">
+        <h6>Idli</h6>
+        <img src="https://images.unsplash.com/photo-1589301760014-d929f3979dbc">
+        <small class="desc">Soft idli with coconut chutney</small>
+
+        <div class="d-flex justify-content-between align-items-center mt-2">
+          <span>₹60</span>
+
+          <div class="d-flex align-items-center">
+            <button onclick="updateQty('item1', -1)" class="qty-btn minus">−</button>
+            <span id="qty-item1" class="mx-2">0</span>
+            <button onclick="updateQty('item1', 1)" class="qty-btn plus">+</button>
+          </div>
+        </div>
+
+        <small class="delivery-text">Delivery: 8–9 AM</small>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- LUNCH -->
+  <div class="section-title">Lunch</div>
+  <div class="row g-3">
+
+    <div class="col-12 col-md-6">
+      <div class="card p-2" id="item2" data-name="Thali" data-price="180" data-slot="2-3 PM">
+        <h6>Thali</h6>
+        <img src="https://images.unsplash.com/photo-1546833999-b9f581a1996d">
+        <small class="desc">4 Roti, Paneer Capsicum Sabji, Toor Dal, Jeera-Ghee Rice</small>
+
+        <div class="d-flex justify-content-between align-items-center mt-2">
+          <span>₹180</span>
+
+          <div class="d-flex align-items-center">
+            <button onclick="updateQty('item2', -1)" class="qty-btn minus">−</button>
+            <span id="qty-item2" class="mx-2">0</span>
+            <button onclick="updateQty('item2', 1)" class="qty-btn plus">+</button>
+          </div>
+        </div>
+
+        <small class="delivery-text">Delivery: 2–3 PM</small>
+      </div>
+    </div>
+
+  </div>
+
+    <!-- Snacks -->
+  <div class="section-title">Evening Snacks</div>
+  <div class="row g-3">
+
+    <div class="col-12 col-md-6">
+      <div class="card p-2" id="item3" data-name="Dhabeli" data-price="60" data-slot="5-6 PM">
+        <h6>Dhabeli</h6>
+        <img src="https://foodiesterminal.com/wp-content/uploads/2018/11/kutchi-dabeli-recipe-768x1160.jpg">
+        <small class="desc">Spiced potato-stuffed bun, a sweet-tangy Gujarati street snack</small>
+
+        <div class="d-flex justify-content-between align-items-center mt-2">
+          <span>₹60</span>
+
+          <div class="d-flex align-items-center">
+            <button onclick="updateQty('item3', -1)" class="qty-btn minus">−</button>
+            <span id="qty-item3" class="mx-2">0</span>
+            <button onclick="updateQty('item3', 1)" class="qty-btn plus">+</button>
+          </div>
+        </div>
+
+        <small class="delivery-text">Delivery: 5–6 PM</small>
+      </div>
+    </div>
+
+  </div>
+
+      <!-- Dinner -->
+  <div class="section-title">Dinner</div>
+  <div class="row g-3">
+
+    <div class="col-12 col-md-6">
+      <div class="card p-2" id="item4" data-name="Paneer Paratha" data-price="80" data-slot="8-9 PM">
+        <h6>Paneer Paratha</h6>
+        <img src="https://www.vegrecipesofindia.com/wp-content/uploads/2021/06/paneer-paratha-recipe-2.jpg">
+        <small class="desc">Medium Spicy grated-paneer stuffed paratha with curd</small>
+
+        <div class="d-flex justify-content-between align-items-center mt-2">
+          <span>₹80</span>
+
+          <div class="d-flex align-items-center">
+            <button onclick="updateQty('item4', -1)" class="qty-btn minus">−</button>
+            <span id="qty-item4" class="mx-2">0</span>
+            <button onclick="updateQty('item4', 1)" class="qty-btn plus">+</button>
+          </div>
+        </div>
+
+        <small class="delivery-text">Delivery: 8–9 PM</small>
+      </div>
+    </div>
+
+  </div>
+  
+<!-- ORDER SUMMARY -->
+<div class="order-summary">
+  <h5 class="mb-3">Your Order</h5>
+
+  <!-- EMPTY STATE -->
+  <div id="empty-cart" class="text-muted">
+    No items added, add items to view them in cart.
+  </div>
+
+  <!-- TABLE -->
+  <table class="table" id="cart-table" style="display:none;">
+    <thead>
+      <tr>
+        <th>Item</th>
+        <th>Price</th>
+        <th>Qty</th>
+      </tr>
+    </thead>
+    <tbody id="cart-body"></tbody>
+    <tfoot>
+      <tr>
+        <th colspan="2">Total</th>
+        <th id="cart-total">₹0</th>
+      </tr>
+    </tfoot>
+  </table>
+</div>
+
+
+  <!-- ORDER FORM -->
+  <div class="order-box">
+    <h5 class="mb-3">Place Order</h5>
+
+    <input id="cust-name" class="form-control mb-2" placeholder="Name *">
+    <input id="cust-phone" type="tel" class="form-control mb-2" placeholder="Phone Number *">
+
+    <input id="cust-pincode" class="form-control mb-2" placeholder="Pincode *">
+    <input id="cust-society" class="form-control mb-2" placeholder="Society Name *">
+    <input id="cust-flat" class="form-control mb-2" placeholder="Flat / Floor / Wing *">
+    <input id="cust-street" class="form-control mb-2" placeholder="Street (optional)">
+
+    <button id="order-btn" onclick="placeOrder()" class="btn btn-dark w-100 mt-2">Place Order</button>
+
+    <!-- RESPONSE -->
+    <div id="order-response" class="mt-3"></div>
+  </div>
+
+</div>
+
+<script>
+
+/* This function determines the correct delivery date based on current IST time, switching to next day after 8 PM so that orders after cutoff are assigned to the next day. */
+function getDeliveryDate() {
+  let now = new Date();
+  let istTime = new Date(now.toLocaleString("en-US", { timeZone: "Asia/Kolkata" }));
+
+  if (istTime.getHours() < 20) {
+    return istTime;
+  } else {
+    let tomorrow = new Date(istTime);
+    tomorrow.setDate(istTime.getDate() + 1);
+    return tomorrow;
+  }
+}
+
+/* This function formats a given date into a readable "13 April" format so customers clearly know which day they are ordering for. */
+function formatDate(date) {
+  return date.toLocaleDateString("en-IN", {
+    day: "numeric",
+    month: "long"
+  });
+}
+
+/* These variables compute and store the delivery date once so that it can be reused across UI display and order submission without recalculating. */
+let deliveryDateObj = getDeliveryDate();
+let deliveryDateStr = formatDate(deliveryDateObj);
+
+/* This function runs only after the full page and DOM are loaded, ensuring all menu items exist before applying date display and out-of-stock logic. */
+window.onload = function () {
+  document.getElementById("menu-date").innerText =
+    deliveryDateStr + " Menu";
+
+  checkTimeBasedOOS();
+};
+
+/* This object acts as an in-memory cart that tracks how many units of each item the user has selected. */
+let cart = {};
+
+/* This function updates the quantity of a specific item in the cart when the user clicks + or -, and then refreshes the UI accordingly. */
+function updateQty(item, change) {
+  if (!cart[item]) cart[item] = 0;
+
+  cart[item] += change;
+
+  if (cart[item] < 0) cart[item] = 0;
+
+  document.getElementById("qty-" + item).innerText = cart[item];
+
+  updateCartUI();
+}
+
+/* This function rebuilds the order summary section by looping through cart items, updating rows, calculating total price, and handling empty cart state. */
+function updateCartUI() {
+  let cartBody = document.getElementById("cart-body");
+  let cartTable = document.getElementById("cart-table");
+  let emptyCart = document.getElementById("empty-cart");
+
+  let total = 0;
+  let hasItems = false;
+
+  cartBody.innerHTML = "";
+
+  for (let item in cart) {
+    if (cart[item] > 0) {
+      hasItems = true;
+
+      let el = document.getElementById(item);
+      let name = el.dataset.name;
+      let price = parseInt(el.dataset.price);
+      let qty = cart[item];
+
+      cartBody.innerHTML += `
+        <tr>
+          <td>${name}</td>
+          <td>₹${price}</td>
+          <td>${qty}</td>
+        </tr>
+      `;
+
+      total += price * qty;
+    }
+  }
+
+  if (!hasItems) {
+    emptyCart.style.display = "block";
+    cartTable.style.display = "none";
+  } else {
+    emptyCart.style.display = "none";
+    cartTable.style.display = "table";
+  }
+
+  document.getElementById("cart-total").innerText = "₹" + total;
+}
+
+/* This function checks whether a menu item should be considered expired based on its delivery time slot and current IST hour. */
+function isItemExpired(slot) {
+  let now = new Date();
+  let ist = new Date(now.toLocaleString("en-US", { timeZone: "Asia/Kolkata" }));
+  let hour = ist.getHours();
+
+  if (slot === "8-9 AM" && hour >= 8) return true;
+  if (slot === "2-3 PM" && hour >= 13) return true;
+  if (slot === "5-6 PM" && hour >= 17) return true;
+  if (slot === "8-9 PM" && hour >= 20) return true;
+
+  return false;
+}
+
+/* This function visually marks an item as out of stock by greying it out, disabling interaction, and appending a clear "Sold Out" label for the user. */
+function markOutOfStock(el) {
+  el.classList.add("sold-out");
+
+  let plusBtn = el.querySelector(".plus");
+  if (plusBtn) plusBtn.disabled = true;
+
+  let text = document.createElement("div");
+  text.innerText = "Sold Out";
+  text.className = "sold-text";
+
+  el.appendChild(text);
+}
+
+/* This function iterates through all menu items on the page and applies time-based out-of-stock rules to each item. */
+function checkTimeBasedOOS() {
+  let today = new Date();
+  let istToday = new Date(today.toLocaleString("en-US", { timeZone: "Asia/Kolkata" }));
+
+  let todayStr = formatDate(istToday);
+
+  /* If ordering for future date, skip OOS */
+  if (deliveryDateStr !== todayStr) {
+    return;
+  }
+
+  let items = document.querySelectorAll(".card");
+
+  items.forEach(el => {
+    let slot = el.dataset.slot;
+
+    if (isItemExpired(slot)) {
+      markOutOfStock(el);
+    }
+  });
+}
+
+/* This function validates all user inputs, ensures the cart has items, constructs the order payload, sends it to Google Sheets, and displays a confirmation with payment instructions. */
+function placeOrder() {
+  let name = document.getElementById("cust-name").value.trim();
+  let phone = document.getElementById("cust-phone").value.trim();
+  let pincode = document.getElementById("cust-pincode").value.trim();
+  let society = document.getElementById("cust-society").value.trim();
+  let flat = document.getElementById("cust-flat").value.trim();
+
+  let responseBox = document.getElementById("order-response");
+
+  let orderBtn = document.getElementById("order-btn");
+
+  /* Disable button and show loading message */
+  orderBtn.disabled = true;
+  responseBox.innerHTML = `<div style="color:#555;">Placing your order...</div>`;
+  
+  /* This block ensures all mandatory fields are filled before proceeding with order placement. */
+  if (!name || !phone || !pincode || !society || !flat) {
+    responseBox.innerHTML = `<div style="color:red;">Please fill all mandatory fields *</div>`;
+	orderBtn.disabled = false;
+    return;
+  }
+
+  /* This block validates that the phone number entered is exactly 10 digits to prevent invalid contact details. */
+  if (!/^\d{10}$/.test(phone)) {
+    responseBox.innerHTML = `<div style="color:red;">Enter valid 10-digit mobile number</div>`;
+	orderBtn.disabled = false;
+    return;
+  }
+
+  /* This block validates that the pincode entered is exactly 6 digits to ensure correct delivery area mapping. */
+  if (!/^\d{6}$/.test(pincode)) {
+    responseBox.innerHTML = `<div style="color:red;">Enter valid 6-digit pincode</div>`;
+	orderBtn.disabled = false;
+    return;
+  }
+
+  /* This block ensures the society name is meaningful and not too short for delivery identification. */
+  if (society.length < 5) {
+    responseBox.innerHTML = `<div style="color:red;">Enter valid society name (min 5 characters)</div>`;
+    return;
+  }
+
+  /* This block ensures flat, wing, or floor details are provided sufficiently for accurate delivery. */
+  if (flat.length < 3) {
+    responseBox.innerHTML = `<div style="color:red;">Enter valid flat details</div>`;
+	orderBtn.disabled = false;
+    return;
+  }
+
+  /* This block restricts ordering to a specific serviceable pincode to maintain hyperlocal delivery scope. */
+  if (pincode !== "400607") {
+    responseBox.innerHTML = `<div style="color:red;">Sorry, we are not yet available in your area.</div>`;
+	orderBtn.disabled = false;
+    return;
+  }
+
+  /* This block ensures that at least one item is added to the cart before allowing order placement. */
+  let hasItems = false;
+  for (let item in cart) {
+    if (cart[item] > 0) hasItems = true;
+  }
+
+  if (!hasItems) {
+    responseBox.innerHTML = `<div style="color:red;">Please add items before placing order.</div>`;
+	orderBtn.disabled = false;
+    return;
+  }
+
+  /* This block converts the cart into a structured list of items and calculates the total order value. */
+  let orderItems = [];
+  let total = 0;
+
+  for (let item in cart) {
+    if (cart[item] > 0) {
+      let el = document.getElementById(item);
+      let price = parseInt(el.dataset.price);
+
+      orderItems.push({
+        name: el.dataset.name,
+        qty: cart[item],
+        slot: el.dataset.slot
+      });
+
+      total += price * cart[item];
+    }
+  }
+
+  /* This object represents the final payload that will be sent to Google Sheets for storage and processing. */
+  let payload = {
+    name,
+    phone,
+    pincode,
+    society,
+    flat,
+    deliveryDate: deliveryDateStr,
+    items: orderItems,
+    total
+  };
+
+  /* This API call sends the order data to Google Apps Script, which writes it into the Google Sheet backend. */
+  fetch("https://script.google.com/macros/s/AKfycbzxjcu0p9dRocYgs374_KwIN6HEp8K6Mq2SbvS21qzlY_9QsnvWjkGIrJSBne6DpE_r6Q/exec", {
+    method: "POST",
+    body: JSON.stringify(payload)
+  });
+	
+  /* This block updates the UI to confirm order placement and displays a QR code for the user to complete payment. */
+  responseBox.innerHTML = `
+    <div style="color:green; font-weight:600;">
+      Order placed successfully!<br>
+      Please complete payment by scanning the UPI QR code below.
+    </div>
+    <div class="mt-2">
+      <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=upi://pay?pa=test@upi&pn=Sheetal" />
+    </div>
+  `;
+}
+  
+</script>
+
+</body>
+</html>
