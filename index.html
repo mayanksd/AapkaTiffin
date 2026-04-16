@@ -641,7 +641,7 @@ function placeOrder() {
   };
 
   /* This API call sends the order data to Google Apps Script, which writes it into the Google Sheet backend. */
-  fetch("https://script.google.com/macros/s/AKfycbzxjcu0p9dRocYgs374_KwIN6HEp8K6Mq2SbvS21qzlY_9QsnvWjkGIrJSBne6DpE_r6Q/exec", {
+  fetch("https://script.google.com/macros/s/AKfycbySqbBsd46_IlotoMfLN6l3GqSXSwWFf738ButruBu9Rh09ZpAPtlV89bh5hdONPh2Q0w/exec", {
     method: "POST",
     body: JSON.stringify(payload)
   });
