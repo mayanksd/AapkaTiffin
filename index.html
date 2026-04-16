@@ -249,6 +249,25 @@ h5 {
 /* This block adjusts font sizes, image sizes, and spacing specifically for smaller screens to ensure proper mobile usability. */
 @media (max-width: 768px) {
 
+  /* This makes header vertical on mobile so image and text don’t get cramped side-by-side */
+  .header {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  /* This overrides the 30% / 70% width split and lets both sections take full width */
+  .header > div {
+    width: 100% !important;
+  }
+
+  /* This ensures all text looks clean and centered under the image */
+  .brand-title,
+  .tagline,
+  .delivery-note {
+    text-align: center;
+  }
+	
   /* Reduce brand title size so it doesn't dominate small screens */
   .brand-title {
     font-size: 26px;
@@ -263,6 +282,7 @@ h5 {
   .profile-img {
     width: 120px;
     height: 120px;
+	margin-bottom: 10px;  /* This adds spacing below the image so text doesn’t stick to it */
   }
 
   /* Reduce section headings to avoid crowding */
