@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Aaoka Tiffin</title>
+<title>Aapka Tiffin</title>
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
@@ -35,6 +35,12 @@ body {
 .tagline {
   font-size: 18px;
   color: #7a6a5a; /* muted brown-grey */
+}
+
+.delivery-note {
+  font-size: 14px; /* slightly smaller than tagline */
+  color: #2c3e50; /* slightly darker */
+  font-weight: 500;
 }
 
 .profile-img {
@@ -168,8 +174,9 @@ body {
       <img src="https://raw.githubusercontent.com/mayanksd/AapkaTiffin/refs/heads/main/aapkatiffin_logo.png" class="profile-img">
     </div>
     <div style="width:70%">
-      <h3 class="mb-1 fw-bold brand-title">Sheetal’s Home Food</h3>
+      <h3 class="mb-1 fw-bold brand-title">Aapka Tiffin</h3>
       <p class="mb-0 tagline">Fresh ghar ka khana, made with love ❤️</p>
+	  <p class="delivery-note mb-0">📍 Delivering in select societies in Thane (Pincode: 400607)</p>
     </div>
   </div>
 
@@ -317,7 +324,9 @@ body {
     <input id="cust-phone" type="tel" class="form-control mb-2" placeholder="Phone Number *">
 
     <input id="cust-pincode" class="form-control mb-2" placeholder="Pincode *">
-    <input id="cust-society" class="form-control mb-2" placeholder="Society Name *">
+    <select id="cust-society" class="form-control mb-2">
+  		<option value="">Select Society *</option>
+	</select>
     <input id="cust-flat" class="form-control mb-2" placeholder="Flat / Floor / Wing *">
     <input id="cust-street" class="form-control mb-2" placeholder="Street (optional)">
 
@@ -357,12 +366,41 @@ function formatDate(date) {
 let deliveryDateObj = getDeliveryDate();
 let deliveryDateStr = formatDate(deliveryDateObj);
 
+// This array stores all allowed societies for dropdown selection
+let societies = [
+  "Lodha Amara",
+  "Lodha Crown Kolshet",
+  "Lodha Sterling",
+  "Kalpataru Immensa Thane",
+  "Vraj Green Valley",
+  "Pride Palms Complex",
+  "Wadhwa Solitaire",
+  "Lavender Society",
+  "Kalpataru Parkcity",
+  "STG Marigold",
+  "Neelkanth Valley",
+  "Kalpataru Sunrise",
+  "Lodha Supremus",
+  "Runwal Lands End",
+  "Lodha Business District, Kolshet",
+  "Lodha i-Think Corporate Tower"
+];
+
 /* This function runs only after the full page and DOM are loaded, ensuring all menu items exist before applying date display and out-of-stock logic. */
 window.onload = function () {
   document.getElementById("menu-date").innerText =
     deliveryDateStr + " Menu";
 
   checkTimeBasedOOS();
+  // Populate society dropdown dynamically from list
+  let societyDropdown = document.getElementById("cust-society");
+
+  societies.forEach(soc => {
+  	let option = document.createElement("option");
+  	option.value = soc;
+  	option.text = soc;
+  	societyDropdown.appendChild(option);
+  });
 };
 
 /* This object acts as an in-memory cart that tracks how many units of each item the user has selected. */
@@ -512,10 +550,10 @@ function placeOrder() {
     return;
   }
 
-  /* This block ensures the society name is meaningful and not too short for delivery identification. */
-  if (society.length < 5) {
-    responseBox.innerHTML = `<div style="color:red;">Enter valid society name (min 5 characters)</div>`;
-    return;
+  // SOCIETY VALIDATION (must be selected)
+  if (!society) {
+  	responseBox.innerHTML = `<div style="color:red;">Please select your society</div>`;
+  	return;
   }
 
   /* This block ensures flat, wing, or floor details are provided sufficiently for accurate delivery. */
