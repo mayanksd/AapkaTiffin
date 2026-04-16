@@ -11,8 +11,8 @@
 <style>
 /* GLOBAL FONT */
 body {
-  background: #f9f7f2;
-  font-family: 'Roboto', sans-serif;
+  background: #f8f9fb; /* soft app-like background */
+  font-family: 'Roboto', system-ui, -apple-system, sans-serif;
 }
 
 /* HEADER (soft, homely, calm background) */
@@ -23,6 +23,11 @@ body {
   box-shadow: 0 4px 10px rgba(0,0,0,0.05); /* subtle depth */
 }
 
+/* This ensures section headings are slightly bold for better readability and hierarchy. */
+h5 {
+  font-weight: 600;
+}
+	
 /* BRAND TITLE (premium, soft, slightly 3D effect) */
 .brand-title {
   font-weight: 900;
@@ -48,19 +53,31 @@ body {
   font-weight: 500;
 }
 
+/* This makes the profile image large and prominent on desktop while automatically scaling down on smaller screens using responsive sizing. */
 .profile-img {
-  width: 90px; /* fixed size for consistency */
-  height: 90px; /* same as width = perfect circle */
-  border-radius: 50%; /* makes it circular */
-  object-fit: cover; /* ensures face fits nicely */
-  border: 2px solid #ffffff; /* clean white border */
+  width: 200px; /* max size for desktop */
+  height: 200px; /* keeps perfect circle */
+  border-radius: 50%; /* circular image */
+  object-fit: cover; /* prevents distortion */
+  border: 2px solid #ffffff; /* clean separation */
+
+  max-width: 40vw; /* scales down on smaller screens */
+  max-height: 40vw; /* keeps proportion consistent */
 }
 
-/* CARDS */
+/* This styles each food item card with rounded corners, no borders, and a soft shadow to create a clean modern card layout. */
 .card {
   border: none;
   border-radius: 16px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  padding: 12px;
+  background: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  transition: 0.2s ease;
+}
+
+/* This adds a slight upward lift effect when the user hovers over a card, improving interactivity and visual feedback. */
+.card:hover {
+  transform: translateY(-2px);
 }
 
 .card img {
@@ -138,13 +155,15 @@ body {
   color: #2c2c2c;
 }
 
-/* ORDER BOX */
+/* This styles the order form container to look like a separate card with padding, rounded corners, and subtle shadow for better visual grouping. */
 .order-box {
-  background: white;
-  padding: 15px;
-  border-radius: 12px;
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 16px;
   margin-top: 20px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
 }
+
 
 /* ORDER SUMMARY SECTION */
 .order-summary {
@@ -164,6 +183,30 @@ body {
   padding: 10px;
   border-radius: 10px;
   text-align: center;
+}
+
+/* This rounds the edges of the cart table and ensures content does not overflow outside the rounded corners. */
+#cart-table {
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+/* This adds spacing inside table cells so the cart content looks less cramped and easier to read. */
+#cart-table td {
+  padding: 8px;
+}
+
+/* This improves input fields by adding rounded corners, light borders, and better spacing to make them feel less like default browser inputs. */
+.form-control {
+  border-radius: 10px;
+  border: 1px solid #e0e0e0;
+  padding: 10px;
+}
+
+/* This removes the default blue glow and replaces it with a cleaner border highlight when the input is focused. */
+.form-control:focus {
+  border-color: #2c3e50;
+  box-shadow: none;
 }
 
 .select-wrapper {
@@ -186,6 +229,80 @@ body {
   color: #6c757d;
   font-size: 12px;
 }
+
+/* This customises the primary button to have rounded corners, better padding, and a cleaner, modern dark colour. */
+.btn-dark {
+  background: #2c3e50;
+  border: none;
+  border-radius: 12px;
+  padding: 12px;
+  font-weight: 600;
+  transition: 0.2s ease;
+}
+
+/* This slightly darkens the button on hover to give clear visual feedback when users interact with it. */
+.btn-dark:hover {
+  background: #1a252f;
+}
+
+/* ================= MOBILE RESPONSIVE FIXES ================= */
+/* This block adjusts font sizes, image sizes, and spacing specifically for smaller screens to ensure proper mobile usability. */
+@media (max-width: 768px) {
+
+  /* Reduce brand title size so it doesn't dominate small screens */
+  .brand-title {
+    font-size: 26px;
+  }
+
+  /* Slightly reduce tagline size for better fit */
+  .tagline {
+    font-size: 15px;
+  }
+
+  /* Reduce profile image size on mobile for better layout balance */
+  .profile-img {
+    width: 120px;
+    height: 120px;
+  }
+
+  /* Reduce section headings to avoid crowding */
+  .section-title {
+    font-size: 22px;
+  }
+
+  /* Reduce item title size slightly */
+  .card h6 {
+    font-size: 18px;
+  }
+
+  /* Make food images shorter to prevent excessive scrolling */
+  .card img {
+    height: 180px;
+  }
+
+  /* Reduce menu date size so it fits nicely */
+  .menu-date {
+    font-size: 18px;
+  }
+
+  /* Reduce button size slightly for better thumb usability */
+  .btn-dark {
+    padding: 10px;
+    font-size: 15px;
+  }
+
+  /* Adjust delivery note spacing */
+  .delivery-note {
+    font-size: 12px;
+    padding: 5px 10px;
+  }
+
+  /* Slightly reduce order box padding for tighter layout */
+  .order-box {
+    padding: 14px;
+  }
+}
+
 </style>
 </head>
 
