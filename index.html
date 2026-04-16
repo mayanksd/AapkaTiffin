@@ -11,7 +11,7 @@
 <style>
 /* GLOBAL FONT */
 body {
-  background: #f8f9fb; /* soft greay, app-like background */
+  background: #eef1f5; /* sharper light grey */
   font-family: 'Roboto', system-ui, -apple-system, sans-serif;
 }
 
@@ -31,22 +31,15 @@ h5 {
 /* This creates a bold, heavy 3D popping effect for the brand title so it stands out immediately on the screen */
 .brand-title {
   font-weight: 900;
-  font-size: 38px;
+  font-size: 36px;
   color: #ffffff;
-
-  /* layered shadow for 3D depth */
-  text-shadow:
-    0px 1px 0px #d1c4ff,
-    0px 2px 0px #b39ddb,
-    0px 3px 0px #9575cd,
-    0px 4px 0px #7e57c2,
-    0px 5px 8px rgba(0,0,0,0.4);
+  text-shadow: 0px 2px 4px rgba(0,0,0,0.25);
 }
 
 /* TAGLINE (soft, homely tone) */
 .tagline {
   font-size: 18px;
-  color: #e6ddff; /* soft lavender tone */
+  color: #e0f2f1;
 }
 
 /* This makes delivery note readable on dark header with subtle highlight background */
@@ -56,7 +49,7 @@ h5 {
   padding: 6px 12px;
   border-radius: 14px;
 
-  background: rgba(255,255,255,0.18); /* translucent white */
+  background: rgba(255,255,255,0.22);  /* slightly stronger for better contrast */
   color: #ffffff;
 
   font-size: 13px;
@@ -79,18 +72,21 @@ h5 {
 
 /* This shows live kitchen status to build trust and urgency */
 .status-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 12px;
   font-size: 12px;
   font-weight: 600;
   margin-top: 4px;
 }
 
-/* This styles each food item card with rounded corners, no borders, and a soft shadow to create a clean modern card layout. */
+/* This makes item cards clearly pop above background with stronger elevation */
 .card {
   border: none;
   border-radius: 16px;
   padding: 12px;
   background: #ffffff;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.10);
   transition: 0.2s ease;
 }
 
@@ -264,6 +260,42 @@ h5 {
   background: #1a252f;
 }
 
+/* This keeps the order bar fixed at bottom of screen */
+#sticky-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  background: #0f6b5b; /* darker teal than header */
+  color: #ffffff;
+
+  padding: 12px 16px;
+
+  display: none;
+  justify-content: space-between;
+  align-items: center;
+
+  z-index: 1000; /* ensures it stays above everything */
+}
+
+/* This styles the button inside sticky bar */
+#sticky-bar button {
+  background: #ffffff;
+  color: #0f6b5b;
+
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+
+  font-weight: 600;
+}
+
+/* This ensures page content is not hidden behind sticky bar */
+body {
+  padding-bottom: 70px;
+}
+	
 /* ================= MOBILE RESPONSIVE FIXES ================= */
 /* This block adjusts layout, font sizes, image sizes, and spacing specifically for smaller screens while keeping header horizontal and compact. */
 @media (max-width: 768px) {
@@ -503,7 +535,7 @@ h5 {
 
 
   <!-- ORDER FORM -->
-  <div class="order-box">
+  <div class="order-box" id="order-section">
     <h5 class="mb-3">Place Order</h5>
 
     <input id="cust-name" class="form-control mb-2" placeholder="Name *">
@@ -526,6 +558,12 @@ h5 {
 
 </div>
 
+<!-- This creates a fixed bar at the bottom with total and order button -->
+<div id="sticky-bar">
+  <span id="sticky-total">₹0</span>
+  <button onclick="goToOrder()">Place Order</button>
+</div>
+	
 <script>
 
 /* This function determines the correct delivery date based on current IST time, switching to next day after 8 PM so that orders after cutoff are assigned to the next day. */
@@ -599,10 +637,12 @@ window.onload = function () {
 
   if (hour < 21) {
     statusEl.innerText = "🟢 Kitchen Open • Order now";
-    statusEl.style.color = "#2e7d32";
+	statusEl.style.background = "rgba(255,255,255,0.2)";
+    statusEl.style.color = "#ffffff";
   } else {
     statusEl.innerText = "🕘 Kitchen closed • Order for tomorrow";
-    statusEl.style.color = "#c0392b";
+	statusEl.style.background = "rgba(255,204,128,0.2)";
+    statusEl.style.color = "#ffcc80";
   }
 };
 
@@ -663,8 +703,26 @@ function updateCartUI() {
   }
 
   document.getElementById("cart-total").innerText = "₹" + total;
+
+  /* This hides sticky bar when cart is empty and shows it when items are added */
+  let stickyBar = document.getElementById("sticky-bar");
+
+  if (total === 0) {
+    stickyBar.style.display = "none";
+  } else {
+    stickyBar.style.display = "flex";
+  }
+  /* This updates the sticky total whenever the cart changes */
+  document.getElementById("sticky-total").innerText = "₹" + total;
 }
 
+/* This scrolls user to the order form smoothly */
+function goToOrder() {
+  document.getElementById("order-section").scrollIntoView({
+    behavior: "smooth"
+  });
+}
+	
 /* This function checks whether a menu item should be considered expired based on its delivery time slot and current IST hour. */
 function isItemExpired(slot) {
   let now = new Date();
