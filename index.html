@@ -38,8 +38,13 @@ body {
 }
 
 .delivery-note {
-  font-size: 14px; /* slightly smaller than tagline */
-  color: #2c3e50; /* slightly darker */
+  display: inline-block;
+  margin-top: 8px;
+  padding: 6px 12px;
+  border-radius: 16px;
+  background: #f4f6f8; /* subtle light grey background */
+  color: #2f3e46; /* clean dark text */
+  font-size: 13px;
   font-weight: 500;
 }
 
@@ -161,6 +166,26 @@ body {
   text-align: center;
 }
 
+.select-wrapper {
+  position: relative;
+}
+
+.select-wrapper select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+.select-wrapper::after {
+  content: "▼";
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: #6c757d;
+  font-size: 12px;
+}
 </style>
 </head>
 
@@ -176,7 +201,7 @@ body {
     <div style="width:70%">
       <h3 class="mb-1 fw-bold brand-title">Aapka Tiffin</h3>
       <p class="mb-0 tagline">Fresh ghar ka khana, made with love ❤️</p>
-	  <p class="delivery-note mb-0">📍 Delivering in select societies in Thane (Pincode: 400607)</p>
+	  <p class="delivery-note mb-0">📍 Thane (400607) • Select societies only</p>
     </div>
   </div>
 
@@ -324,9 +349,11 @@ body {
     <input id="cust-phone" type="tel" class="form-control mb-2" placeholder="Phone Number *">
 
     <input id="cust-pincode" class="form-control mb-2" placeholder="Pincode *">
-    <select id="cust-society" class="form-control mb-2">
-  		<option value="">Select Society *</option>
-	</select>
+    <div class="select-wrapper">
+      <select id="cust-society" class="form-control mb-2">
+        <option value="">Select Society *</option>
+      </select>
+    </div>
     <input id="cust-flat" class="form-control mb-2" placeholder="Flat / Floor / Wing *">
     <input id="cust-street" class="form-control mb-2" placeholder="Street (optional)">
 
