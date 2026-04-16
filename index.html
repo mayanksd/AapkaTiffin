@@ -609,26 +609,25 @@ function placeOrder() {
     return;
   }
 
-  /* This block converts the cart into a structured list of items and calculates the total order value. */
+  /* This block converts the cart into a structured list of items and calculates per-item totals instead of a single combined order total. */
   let orderItems = [];
-  let total = 0;
 
   for (let item in cart) {
     if (cart[item] > 0) {
       let el = document.getElementById(item);
       let price = parseInt(el.dataset.price);
+      let qty = cart[item];
 
       orderItems.push({
         name: el.dataset.name,
-        qty: cart[item],
-        slot: el.dataset.slot
+        qty: qty,
+        slot: el.dataset.slot,
+        itemTotal: price * qty
       });
-
-      total += price * cart[item];
     }
   }
 
-  /* This object represents the final payload that will be sent to Google Sheets for storage and processing. */
+  /* This object represents the final payload sent to Google Sheets, now using item-level totals instead of a single order total. */
   let payload = {
     name,
     phone,
@@ -636,8 +635,7 @@ function placeOrder() {
     society,
     flat,
     deliveryDate: deliveryDateStr,
-    items: orderItems,
-    total
+    items: orderItems
   };
 
   /* This API call sends the order data to Google Apps Script, which writes it into the Google Sheet backend. */
