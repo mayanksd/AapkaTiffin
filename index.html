@@ -11,47 +11,58 @@
 <style>
 /* GLOBAL FONT */
 body {
-  background: #f8f9fb; /* soft app-like background */
+  background: #f8f9fb; /* soft greay, app-like background */
   font-family: 'Roboto', system-ui, -apple-system, sans-serif;
 }
 
-/* HEADER (soft, homely, calm background) */
+/* This gives header a strong premium look using a deep purple background that stands out clearly from the rest of the page */
 .header {
-  background: #fdf6ec; /* soft warm off-white, not spicy */
+  background: #00695c; /* deep premium purple */
   padding: 18px;
   border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.05); /* subtle depth */
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
 }
 
 /* This ensures section headings are slightly bold for better readability and hierarchy. */
 h5 {
   font-weight: 600;
 }
-	
-/* BRAND TITLE (premium, soft, slightly 3D effect) */
+
+/* This creates a bold, heavy 3D popping effect for the brand title so it stands out immediately on the screen */
 .brand-title {
   font-weight: 900;
   font-size: 38px;
-  color: #5a3e2b; /* deep brown, food-friendly */
-  text-shadow: 1px 1px 0 #ffffff; /* soft 3D lift */
+  color: #ffffff;
+
+  /* layered shadow for 3D depth */
+  text-shadow:
+    0px 1px 0px #d1c4ff,
+    0px 2px 0px #b39ddb,
+    0px 3px 0px #9575cd,
+    0px 4px 0px #7e57c2,
+    0px 5px 8px rgba(0,0,0,0.4);
 }
 
 /* TAGLINE (soft, homely tone) */
 .tagline {
   font-size: 18px;
-  color: #7a6a5a; /* muted brown-grey */
+  color: #e6ddff; /* soft lavender tone */
 }
 
+/* This makes delivery note readable on dark header with subtle highlight background */
 .delivery-note {
   display: inline-block;
   margin-top: 8px;
   padding: 6px 12px;
-  border-radius: 16px;
-  background: #f4f6f8; /* subtle light grey background */
-  color: #2f3e46; /* clean dark text */
+  border-radius: 14px;
+
+  background: rgba(255,255,255,0.18); /* translucent white */
+  color: #ffffff;
+
   font-size: 13px;
   font-weight: 500;
 }
+
 
 /* This makes the profile image large and prominent on desktop while automatically scaling down on smaller screens using responsive sizing. */
 .profile-img {
@@ -60,9 +71,17 @@ h5 {
   border-radius: 50%; /* circular image */
   object-fit: cover; /* prevents distortion */
   border: 2px solid #ffffff; /* clean separation */
+  box-shadow: 0 6px 16px rgba(0,0,0,0.25);
 
   max-width: 40vw; /* scales down on smaller screens */
   max-height: 40vw; /* keeps proportion consistent */
+}
+
+/* This shows live kitchen status to build trust and urgency */
+.status-badge {
+  font-size: 12px;
+  font-weight: 600;
+  margin-top: 4px;
 }
 
 /* This styles each food item card with rounded corners, no borders, and a soft shadow to create a clean modern card layout. */
@@ -246,43 +265,47 @@ h5 {
 }
 
 /* ================= MOBILE RESPONSIVE FIXES ================= */
-/* This block adjusts font sizes, image sizes, and spacing specifically for smaller screens to ensure proper mobile usability. */
+/* This block adjusts layout, font sizes, image sizes, and spacing specifically for smaller screens while keeping header horizontal and compact. */
 @media (max-width: 768px) {
 
-  /* This makes header vertical on mobile so image and text don’t get cramped side-by-side */
+  /* This keeps header horizontal on mobile to avoid wasting vertical space */
   .header {
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
-    text-align: center;
+    gap: 10px;
   }
 
-  /* This overrides the 30% / 70% width split and lets both sections take full width */
-  .header > div {
-    width: 100% !important;
+  /* This maintains a compact 30% / 70% layout for image and text */
+  .header > div:first-child {
+    width: 30% !important;
   }
 
-  /* This ensures all text looks clean and centered under the image */
+  .header > div:last-child {
+    width: 70% !important;
+  }
+
+  /* This ensures all header text is left-aligned for better readability */
   .brand-title,
   .tagline,
   .delivery-note {
-    text-align: center;
+    text-align: left;
   }
-	
+
   /* Reduce brand title size so it doesn't dominate small screens */
   .brand-title {
-    font-size: 26px;
+    font-size: 24px;
   }
 
   /* Slightly reduce tagline size for better fit */
   .tagline {
-    font-size: 15px;
+    font-size: 14px;
   }
 
   /* Reduce profile image size on mobile for better layout balance */
   .profile-img {
-    width: 120px;
-    height: 120px;
-	margin-bottom: 10px;  /* This adds spacing below the image so text doesn’t stick to it */
+    width: 90px;
+    height: 90px;
+	  
   }
 
   /* Reduce section headings to avoid crowding */
@@ -339,6 +362,7 @@ h5 {
       <h3 class="mb-1 fw-bold brand-title">Aapka Tiffin</h3>
       <p class="mb-0 tagline">Fresh ghar ka khana ❤️</p>
 	  <p class="delivery-note mb-0">📍 Thane (400607) • Select societies only</p>
+	  <p id="kitchen-status" class="status-badge"></p>
     </div>
   </div>
 
@@ -485,7 +509,6 @@ h5 {
     <input id="cust-name" class="form-control mb-2" placeholder="Name *">
     <input id="cust-phone" type="tel" class="form-control mb-2" placeholder="Phone Number *">
 
-    <input id="cust-pincode" class="form-control mb-2" placeholder="Pincode *">
     <div class="select-wrapper">
       <select id="cust-society" class="form-control mb-2">
         <option value="">Select Society *</option>
@@ -493,6 +516,7 @@ h5 {
     </div>
     <input id="cust-flat" class="form-control mb-2" placeholder="Flat / Floor / Wing *">
     <input id="cust-street" class="form-control mb-2" placeholder="Street (optional)">
+	<input id="cust-pincode" class="form-control mb-2" placeholder="Pincode *">
 
     <button id="order-btn" onclick="placeOrder()" class="btn btn-dark w-100 mt-2">Place Order</button>
 
@@ -565,6 +589,21 @@ window.onload = function () {
   	option.text = soc;
   	societyDropdown.appendChild(option);
   });
+
+  /* This sets kitchen status based on IST time (before 9 PM = open, after = closed for today) */
+  let now = new Date();
+  let ist = new Date(now.toLocaleString("en-US", { timeZone: "Asia/Kolkata" }));
+  let hour = ist.getHours();
+
+  let statusEl = document.getElementById("kitchen-status");
+
+  if (hour < 21) {
+    statusEl.innerText = "🟢 Kitchen Open • Order now";
+    statusEl.style.color = "#2e7d32";
+  } else {
+    statusEl.innerText = "🕘 Kitchen closed • Order for tomorrow";
+    statusEl.style.color = "#c0392b";
+  }
 };
 
 /* This object acts as an in-memory cart that tracks how many units of each item the user has selected. */
